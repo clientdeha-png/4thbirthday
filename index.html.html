@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fun Scene</title>
+
+<style>
+
+body{
+margin:0;
+overflow:hidden;
+font-family:Arial;
+}
+
+/* PAGE 2 */
+
+#page2{
+position:relative;
+width:100vw;
+height:100vh;
+background:url("");
+background-size:cover;
+background-position:center;
+}
+
+/* rope */
+
+#rope{
+position:absolute;
+top:0;
+left:50%;
+transform:translateX(-50%);
+width:6px;
+height:90px;
+background:#c89c5c;
+border-radius:4px;
+}
+
+/* Sukuna */
+
+#sukuna{
+position:absolute;
+top:6%;
+left:50%;
+transform:translateX(-50%);
+width:180px;
+cursor:grab;
+}
+
+/* Megumi */
+
+#megumi{
+position:absolute;
+bottom:6%;
+left:50%;
+transform:translateX(-50%);
+width:160px;
+}
+
+/* Dialog bubble */
+
+.dialog{
+position:absolute;
+padding:8px 14px;
+border-radius:12px;
+background:#ff3c3c;
+color:white;
+font-size:16px;
+display:none;
+}
+
+/* Sukuna text RIGHT side */
+
+#sukunaText{
+top:12%;
+left:60%;
+}
+
+/* Megumi text LEFT side */
+
+#megumiText{
+bottom:32%;
+left:25%;
+}
+
+/* sparkle */
+
+.sparkle{
+position:absolute;
+width:6px;
+height:6px;
+background:white;
+border-radius:50%;
+animation:sparkle 1s linear infinite;
+}
+
+@keyframes sparkle{
+
+0%{opacity:0; transform:scale(.3)}
+50%{opacity:1; transform:scale(1)}
+100%{opacity:0; transform:scale(.3)}
+
+}
+
+/* PAGE 3 */
+
+#page3{
+display:none;
+width:100vw;
+height:100vh;
+background:linear-gradient(#ffd8f0,#fff0fa);
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+}
+
+#text{
+font-size:32px;
+color:#ff4da6;
+font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 2 -->
+
+<div id="page2">
+
+<div id="rope"></div>
+
+<img id="sukuna" src="sukuna1234.png.png">
+
+<img id="megumi" src=megumi4321.png.png">
+
+<div id="sukunaText" class="dialog">
+Happy Birthday Baby 😈
+</div>
+
+<div id="megumiText" class="dialog">
+Sukuna chahiye mujhe, usko niche lao!
+</div>
+
+</div>
+
+<!-- PAGE 3 -->
+
+<div id="page3">
+
+<div id="text">
+Thank You Muskan 💖
+</div>
+
+</div>
+
+<script>
+
+let sukuna=document.getElementById("sukuna")
+let rope=document.getElementById("rope")
+let page2=document.getElementById("page2")
+let page3=document.getElementById("page3")
+
+let megumiText=document.getElementById("megumiText")
+let sukunaText=document.getElementById("sukunaText")
+
+let startY=0
+let move=0
+let dragging=false
+
+/* Opening sequence */
+
+window.onload=()=>{
+
+sukunaText.style.display="block"
+
+setTimeout(()=>{
+
+megumiText.style.display="block"
+
+document.getElementById("megumi").style.transform=
+"translateX(-50%) translateY(-20px)"
+
+},2000)
+
+}
+
+/* Sparkle effect */
+
+function sparkles(){
+
+for(let i=0;i<10;i++){
+
+let s=document.createElement("div")
+s.className="sparkle"
+
+s.style.left=Math.random()*window.innerWidth+"px"
+s.style.top=Math.random()*window.innerHeight+"px"
+
+page2.appendChild(s)
+
+setTimeout(()=>{s.remove()},800)
+
+}
+
+}
+
+/* Drag start */
+
+sukuna.addEventListener("mousedown",e=>{
+dragging=true
+startY=e.clientY
+})
+
+sukuna.addEventListener("touchstart",e=>{
+dragging=true
+startY=e.touches[0].clientY
+})
+
+/* Drag move */
+
+function moveSukuna(y){
+
+move=y-startY
+
+if(move>0){
+
+sukuna.style.transform=
+"translateX(-50%) translateY("+move+"px) rotate("+move/10+"deg)"
+
+rope.style.height=90+move+"px"
+
+sparkles()
+
+}
+
+if(move>260){
+
+setTimeout(()=>{
+
+sukuna.style.transform=
+"translateX(-50%) translateY("+move+"px) scale(1.2)"
+
+document.getElementById("megumi").style.transform=
+"translateX(-50%) translateY(-25px)"
+
+},100)
+
+setTimeout(()=>{
+
+page2.style.display="none"
+page3.style.display="flex"
+
+},1200)
+
+}
+
+}
+
+sukuna.addEventListener("touchmove",e=>{
+if(!dragging)return
+moveSukuna(e.touches[0].clientY)
+})
+
+document.addEventListener("mousemove",e=>{
+if(!dragging)return
+moveSukuna(e.clientY)
+})
+
+document.addEventListener("mouseup",()=>{
+dragging=false
+})
+
+</script>
+
+</body>
+</html>
